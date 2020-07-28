@@ -7,6 +7,10 @@ export const GET_BUSINESS = 'GET_BUSINESS';
 export const GET_VOLUNTEER = 'GET VOLUNTEER';
 export const UPDATE_BUSINESS = 'UPDATE_BUSINESS';
 export const UPDATE_VOLUNTEER = 'UPDATE_VOLUNTEER';
+export const GET_VOL_DATA = 'GET_VOL_DATA';
+
+//let theUser = localStorage.getItem('user');
+
 
 // CREATES -- /register, /login, /pickup
 export const registerRequest = newAcct => dispatch => {
@@ -32,7 +36,12 @@ export const loginRequest = currentAcct => dispatch => {
         .then(res => {
             console.log('Testing data when logging in:', res.data);
             localStorage.setItem('token', res.data.token);
+
             dispatch({type: LOGIN_TO_ACCT});
+
+            console.log('Testing token at Login:', localStorage);
+            dispatch({type: LOGIN_TO_ACCT, payload: currentAcct});
+
         })
         .catch(err => {
             console.log('Unable to login to acct');
@@ -62,7 +71,20 @@ export const getVolunteer = () => dispatch => {};
 
 export const getBUser = () => dispatch => {};
 
-export const getVUser = () => dispatch => {};
+export const getVUser = (username) => dispatch => {
+    console.log('Inside getVUser in actions', username);
+    dispatch({type: FETCHING_DATA})
+    axiosWithAuth()
+        .get(`/volunteer/${username}`)
+        .then(res => {
+            console.log('Testing fetched volunteer username:', res.data);
+            dispatch({type: GET_VOL_DATA, payload: res.data});
+        })
+        .catch(err => {
+            console.log('Error fetching specified Volunteer Username');
+            console.dir(err);
+        })
+};
 
 
 // UPDATES -- /business/username, /volunteer/username, /pickup/id

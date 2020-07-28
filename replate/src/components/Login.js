@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {Link, useHistory} from 'react-router-dom';
-import axiosWithAuth from '../utils/axiosWithAuth';
 import {loginRequest} from '../actions/allActions';
 import {connect} from 'react-redux';
 
@@ -11,6 +10,7 @@ const blankLogin = {
 
 const Login = props => {
     const [credentials, setCredentials] = useState(blankLogin);
+    const history = useHistory();
 
     const updateForm = evt => {
         const {name, value} = evt.target;
@@ -21,36 +21,16 @@ const Login = props => {
     const submitLogin = evt => {
         evt.preventDefault();
 
-    /*
-        axiosWithAuth()
-            .post('/login', credentials)
-            .then(res => {
-                console.log('Testing credentials from Login.js:', res.data);
-                localStorage.setItem('token', res.data.payload);
-            })
-            .catch(err => {
-                console.log('Error logging in to acct from Login.js');
-            })
-    */
-
        console.log('Checking credentials on Login.js', credentials);
-       loginRequest(credentials);
+       props.loginRequest(credentials);
     };
 
 
     //Start of Debugging Test Data
     const testLog = data => {
-        // axiosWithAuth()
-        //     .post('/login', data)
-        //     .then(res => {
-        //         console.log('I am inside the axios method in Login Form');
-        //         localStorage.setItem('token', res.data.payload)
-        //     })
-        //     .catch(err => {
-        //         console.log(err);
-        //     })
         console.log('Checking Login account data:', data)
         props.loginRequest(data);
+        props.history.push('/volunteer');
     };
 
     const testBsn = evt => {
@@ -71,8 +51,8 @@ const Login = props => {
         console.log('Inside the testVol function');
 
         const acctV = {
-            username: 'ShopofHorrors',
-            password: 'pleasework',
+            username: 'user012',
+            password: 'pw0012',
             accountType: 'volunteer'
         };
 
@@ -94,4 +74,10 @@ const Login = props => {
     );
 };
 
-export default connect(null, {loginRequest})(Login);
+const mapStateToProps = state => {
+    return {
+        username: state.username
+    };
+};
+
+export default connect(mapStateToProps, {loginRequest})(Login);

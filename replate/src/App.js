@@ -1,10 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
 import {BrowserRouter, Link, Switch, Route} from 'react-router-dom';
 import './App.css';
 
+import PrivateRoute from './components/PrivateRoute';
 import Registration from './components/Registration';
 import Login from './components/Login';
+import VDashboard from './components/volunteer/VDashboard';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <BrowserRouter>
         <Route exact path='/' component={Login} />
         <Route path='/register' component={Registration} />
+        <Route path='/volunteer' component={VDashboard} />
       </BrowserRouter>
     </div>
   );
