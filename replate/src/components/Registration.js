@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import {registerRequest} from '../actions/allActions';
 import {connect} from 'react-redux';
-import axiosWithAuth from '../utils/axiosWithAuth';
 
 const blankFields = {
     bvName: '',
@@ -14,19 +13,8 @@ const blankFields = {
 };
 
 const Registration = props => {
-    const testPost = passedObj => {
-        // axiosWithAuth()
-        //     .post('/register', passedObj)
-        //     .then(res => {
-        //         console.log('Inside testPost in Register Form. Data:', res.data);
-        //     })
-        //     .catch(err => {
-        //         console.log(err);
-        //     })
-        console.log('Testing registered account data', passedObj);
-        props.registerRequest(passedObj);
-    };
     const [newAcct, setNewAcct] = useState(blankFields);
+    const history = useHistory();
 
     const updateValues = evt => {
         const {name, value} = evt.target;
@@ -54,16 +42,7 @@ const Registration = props => {
                 accountType: newAcct.accountType
             };
             console.log('bsnAcct is', bsnAcct);
-            //registerRequest(bsnAcct);
-
-            axiosWithAuth()
-                .post('/register', bsnAcct)
-                .then(res => {
-                    console.log('Registering new acct:', res.data);
-                })
-                .catch(err => {
-                    console.log('Unable to register new acct');
-                })
+            props.registerRequest(bsnAcct);
         } else if(newAcct.accountType === 'volunteer') {
             //This uses key 'volunteerName' instead of 'businessName' and doesn't use an address, at all
             let volAcct = {
@@ -74,24 +53,20 @@ const Registration = props => {
                 accountType: newAcct.accountType
             };
             console.log('volAcct is', volAcct);
-            //registerRequest(volAcct);
-
-            axiosWithAuth()
-                .post('/register', volAcct)
-                .then(res => {
-                    console.log('Registering new acct:', res.data);
-                })
-                .catch(err => {
-                    console.log('Unable to register new acct');
-                })
+            props.registerRequest(volAcct);
         }
     };
 
     //Start of TEST DATA
+    const testPost = passedObj => {
+        console.log('Testing registered account data', passedObj);
+        props.registerRequest(passedObj);
+        props.history.push('/volunteer');
+    };
 
     const submitBsn = evt => {
         evt.preventDefault();
-        let bsn = {
+        const bsn = {
             username: 'WantCheese',
             password: 'supersize',
             businessName: 'Burger Town',
@@ -105,11 +80,11 @@ const Registration = props => {
 
     const submitVol = evt => {
         evt.preventDefault();
-        let vol = {
-            username: 'ShopofHorrors',
-            password: 'pleasework',
-            volunteerName: 'Rick Moranis',
-            phoneNumber: '714-555-0876',
+        const vol = {
+            username: 'user012',
+            password: 'pw0012',
+            volunteerName: 'B Johnson',
+            phoneNumber: '714-555-0000',
             accountType: 'volunteer'
         };
 
@@ -131,4 +106,10 @@ const Registration = props => {
     );
 };
 
-export default connect(null, {registerRequest})(Registration);
+const mapStateToProps = state => {
+    return {
+        username: state.username
+    };
+};
+
+export default connect(mapStateToProps, {registerRequest})(Registration);
