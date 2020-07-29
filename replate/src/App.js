@@ -1,11 +1,13 @@
 import React from "react";
-
-import FormSighs from "./components/FormSighs";
+import { Switch, Route } from "react-router-dom";
+import Home from "./components/Home";
 
 function App() {
   return (
     <div className="App">
-      <FormSighs />
+      <Route path="/">
+        <Home />
+      </Route>
     </div>
   );
 }
