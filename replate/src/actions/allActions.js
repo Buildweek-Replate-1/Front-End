@@ -4,10 +4,13 @@ export const FETCHING_DATA = 'FETCHING_DATA';
 export const CREATE_NEW_ACCT = 'CREATE_NEW_ACCT';
 export const LOGIN_TO_ACCT = 'LOGIN_TO_ACCT';
 export const GET_BUSINESS = 'GET_BUSINESS';
+export const GET_VOLUNTEER = 'GET VOLUNTEER';
 export const UPDATE_BUSINESS = 'UPDATE_BUSINESS';
+export const UPDATE_VOLUNTEER = 'UPDATE_VOLUNTEER';
 export const GET_VOL_DATA = 'GET_VOL_DATA';
 
 //let theUser = localStorage.getItem('user');
+
 
 // CREATES -- /register, /login, /pickup
 export const registerRequest = newAcct => dispatch => {
@@ -33,8 +36,12 @@ export const loginRequest = currentAcct => dispatch => {
         .then(res => {
             console.log('Testing data when logging in:', res.data);
             localStorage.setItem('token', res.data.token);
+
+            dispatch({type: LOGIN_TO_ACCT});
+
             console.log('Testing token at Login:', localStorage);
             dispatch({type: LOGIN_TO_ACCT, payload: currentAcct});
+
         })
         .catch(err => {
             console.log('Unable to login to acct');
