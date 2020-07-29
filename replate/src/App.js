@@ -1,8 +1,7 @@
 import React from 'react';
-import {BrowserRouter, Link, Switch, Route} from 'react-router-dom';
+import {BrowserRouter, Route} from 'react-router-dom';
 import './App.css';
-
-import PrivateRoute from './components/PrivateRoute';
+// import PrivateRoute from './components/PrivateRoute';
 import Registration from './components/Registration';
 import Login from './components/Login';
 import VDashboard from './components/volunteer/VDashboard';
