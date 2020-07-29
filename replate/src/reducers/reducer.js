@@ -30,7 +30,7 @@ export const reducer = (state = initState, action) => {
             console.log('Payload:', action.payload);
             return {...state, isFetching: false, currentUser: {...action.payload}};
         case CREATE_PICKUP:
-            return {...state, isFetching: false, pickups: {...action.payload}};
+            return {...state, isFetching: false};
         case GET_BUSINESS:
             return {...state, isFetching: false};
         case UPDATE_BUSINESS:
