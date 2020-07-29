@@ -1,12 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-const VComplete = props => {
+const BComplete = props => {
     const testCompletes = (foodArray) => {
         let cmp = [];
         for(let item = 0; item < foodArray.length; item++) {
             if(foodArray[item].status === 'Complete') {
-                if(foodArray[item].volunteerAccountID === props.id) {
+                if(foodArray[item].businessAccountID === props.id) {
                     cmp.push(foodArray[item]);
                 }
             }
@@ -14,8 +14,7 @@ const VComplete = props => {
  
         console.log('Testing filtered foodList:', cmp);
  
-        return cmp.length > 0 ? cmp.map(cmpItem => <div>{cmpItem.foodType}</div>) : <div>None</div>
-    };
+        return cmp.length > 0 ? cmp.map(cmpItem => <div>{cmpItem.foodType}</div>) : <div>None</div>};
 
     return (
         <div>
@@ -36,4 +35,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, {})(VComplete);
+export default connect(mapStateToProps, {})(BComplete);

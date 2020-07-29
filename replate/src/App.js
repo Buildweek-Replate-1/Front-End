@@ -6,7 +6,7 @@ import PrivateRoute from './components/PrivateRoute';
 import Registration from './components/Registration';
 import Login from './components/Login';
 import VDashboard from './components/volunteer/VDashboard';
-//import Business from './components/business/Business';
+import BDashboard from './components/business/BDashboard';
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
       <BrowserRouter>
         <Route exact path='/' component={Login} />
         <Route path='/register' component={Registration} />
-        {/* <Route path='/business' component={Business} /> */}
+        <Route path='/business' component={BDashboard} />
         <Route path='/volunteer' component={VDashboard} />
       </BrowserRouter>
     </div>

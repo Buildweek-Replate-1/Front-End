@@ -27,11 +27,14 @@ const Login = props => {
 
 
     //Start of Debugging Test Data
+    /*
     const testLog = data => {
-        console.log('Checking Login account data:', data)
+        console.log('Checking Login account data:', data);
         props.loginRequest(data);
+        console.log('Double checking via props:', props.username);
         props.history.push('/volunteer');
     };
+    */
 
     const testBsn = evt => {
         evt.preventDefault();
@@ -43,7 +46,11 @@ const Login = props => {
             accountType: 'business'
         };
 
-        testLog(acctB);
+        //testLog(acctB);
+        console.log('Checking Bsn Login account data:', acctB);
+        props.loginRequest(acctB);
+        console.log('Double checking BSN via props:', props.username);
+        props.history.push('/business');
     };
 
     const testVol = evt => {
@@ -56,7 +63,11 @@ const Login = props => {
             accountType: 'volunteer'
         };
 
-        testLog(acctV);
+        //testLog(acctV);
+        console.log('Checking Vol Login account data:', acctV);
+        props.loginRequest(acctV);
+        console.log('Double checking VOL via props:', props.username);
+        props.history.push('/volunteer');
     };
     //End of Debugging Test Data
 
@@ -76,7 +87,8 @@ const Login = props => {
 
 const mapStateToProps = state => {
     return {
-        username: state.username
+        username: state.currentUser.username,
+        id: state.currentUser.id
     };
 };
 

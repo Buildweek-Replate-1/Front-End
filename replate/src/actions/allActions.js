@@ -5,9 +5,11 @@ export const CREATE_NEW_ACCT = 'CREATE_NEW_ACCT';
 export const LOGIN_TO_ACCT = 'LOGIN_TO_ACCT';
 export const GET_BUSINESS = 'GET_BUSINESS';
 export const UPDATE_BUSINESS = 'UPDATE_BUSINESS';
+export const GET_BSN_DATA = 'GET_BSN_DATA';
 export const GET_VOL_DATA = 'GET_VOL_DATA';
 export const GET_ALL_PICKUPS = 'GET_ALL_PICKUPS';
 export const CREATE_PICKUP = 'CREATE_PICKUP';
+export const TEST_CREATE_PICKUP = 'TEST_CREATE_PICKUP';
 
 //let theUser = localStorage.getItem('user');
 
@@ -44,30 +46,58 @@ export const loginRequest = currentAcct => dispatch => {
         })
 };
 
+export const testPickup = testOrder => dispatch => {
+    console.log('Inside action to create a test pickup order');
+    dispatch({type: FETCHING_DATA})
+    axiosWithAuth()
+        .post('/pickup', testOrder)
+        .then(res => {
+            console.log('Test Pickup: Checking data', res.data);
+            dispatch({type: TEST_CREATE_PICKUP});
+        })
+        .catch(err => {
+            console.log('Unable to create the test pickup order');
+            console.dir(err);
+        })
+};
+
 export const newPickup = currentOrder => dispatch => {};
 
 
 // READS -- /business, /volunteer, /business/username, /volunteer/username, /pickup
-export const getBusiness = () => dispatch => {
-    dispatch({type: FETCHING_DATA})
-    axiosWithAuth()
-        .get('/business')
-        .then(res => {
-            console.log('');
-            const fetchedData = {}; // <-- This needs to be filled, placeholder for now
-            dispatch({type: GET_BUSINESS, payload: fetchedData});
-        })
-        .catch(err => {
-            console.log('');
-        })
-};
+// export const getBusiness = () => dispatch => {
+//     dispatch({type: FETCHING_DATA})
+//     axiosWithAuth()
+//         .get('/business')
+//         .then(res => {
+//             console.log('');
+//             const fetchedData = {}; // <-- This needs to be filled, placeholder for now
+//             dispatch({type: GET_BUSINESS, payload: fetchedData});
+//         })
+//         .catch(err => {
+//             console.log('');
+//         })
+// };
 
 export const getVolunteer = () => dispatch => {};
 
-export const getBUser = () => dispatch => {};
+export const getBUser = (username) => dispatch => {
+    console.log('Inside getBUser in actions. Passed username is:', username);
+    dispatch({type: FETCHING_DATA})
+    axiosWithAuth()
+        .get(`/business/${username}`)
+        .then(res => {
+            console.log('Testing fetched business username:', res.data);
+            dispatch({type: GET_BSN_DATA, payload: res.data});
+        })
+        .catch(err => {
+            console.log('Error fetching specified Business Username');
+            console.dir(err);
+        })
+};
 
 export const getVUser = (username) => dispatch => {
-    console.log('Inside getVUser in actions', username);
+    console.log('Inside getVUser in actions. Passed username is:', username);
     dispatch({type: FETCHING_DATA})
     axiosWithAuth()
         .get(`/volunteer/${username}`)
@@ -88,9 +118,10 @@ export const getPendingPickups = () => dispatch => {
         .get('/pickup')
         .then(res => {
             console.log('Checking pickup list', res.data);
-            dispatch({type: GET_ALL_PICKUPS});
+            dispatch({type: GET_ALL_PICKUPS, payload: res.data});
         })
         .catch(err => {
+            console.log('Error fetching pending pickup orders');
             console.dir(err);
         })
 

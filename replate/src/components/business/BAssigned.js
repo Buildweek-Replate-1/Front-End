@@ -1,12 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-const VAssigned = props => {
+const BAssigned = props => {
     const testAssigned = (foodArray) => {
         let asgn = [];
         for(let item = 0; item < foodArray.length; item++) {
             if(foodArray[item].status === 'Assigned') {
-                if(foodArray[item].volunteerAccountID === props.id) {
+                if(foodArray[item].businessAccountID === props.id) {
                     asgn.push(foodArray[item]);
                 }
             }
@@ -36,4 +36,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, {})(VAssigned);
+export default connect(mapStateToProps, {})(BAssigned);

@@ -116,7 +116,8 @@ const Registration = props => {
 
 const mapStateToProps = state => {
     return {
-        username: state.username
+        username: state.currentUser.username,
+        id: state.currentUser.id
     };
 };
 

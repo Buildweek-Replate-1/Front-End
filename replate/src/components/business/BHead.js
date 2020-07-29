@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import {useHistory} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {getVUser} from '../../actions/allActions';
+import {getBUser} from '../../actions/allActions';
 
-const VHead = props => {
+const BHead = props => {
     useEffect(() => {
-        props.getVUser(props.username);
+        props.getBUser(props.username);
         console.log('Dashboard useEffect - Testing data:', props.username);
     }, [props.username]);
 
@@ -34,4 +34,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, {getVUser})(VHead);
+export default connect(mapStateToProps, {getBUser})(BHead);
