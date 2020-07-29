@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 const VHead = props => {
     const history = useHistory();
 
-    //const getName = localStorage.getItem('user');
+    const editUser = () => {};
 
     const submitLogout = () => {
         history.push('/');
@@ -15,6 +15,7 @@ const VHead = props => {
         <div>
             <p>Header Section of Dashboard</p>
             <h1>Welcome {props.username}</h1>
+            <input type='button' value='Edit Acct' onClick={editUser} />
             <input type='button' value='Log Out' onClick={submitLogout} />
         </div>
     );
