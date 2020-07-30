@@ -11,6 +11,8 @@ import Login from './components/Login';
 import VDashboard from './components/volunteer/VDashboard';
 //import Business from './components/business/Business';
 import BusForm from './components/business/BusDashboard';
+import RegisterBusiness from './components/RegisterBusiness';
+import RegisterVolunteer from './components/RegisterVolunteer';
 
 
 function App() {
@@ -25,6 +27,8 @@ function App() {
         {/* <Route path='/business' component={Business} /> */}
         <Route path='/volunteer' component={VDashboard} />
         <Route path='/business' component={BusForm} />
+        <Route path='/RegisterBusiness' component={RegisterBusiness} />
+        <Route path='/RegisterVolunteer' component={RegisterVolunteer} />
       </BrowserRouter>
     </div>
   );

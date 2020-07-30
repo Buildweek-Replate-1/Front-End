@@ -20,7 +20,8 @@ function Home() {
             <Link to="/RegisterVolunteer">
               <button>Register for Volunteer</button>
             </Link>
-            <Switch>
+            {/* Unit 3 Moved the Routes below to App.js */}
+            {/* <Switch>
               <Route
                 exact
                 path="/RegisterBusiness"
@@ -31,10 +32,7 @@ function Home() {
                 path="/RegisterVolunteer"
                 component={RegisterVolunteer}
               />
-
-              {/* <RegisterBusiness /> */}
-              {/* <RegisterVolunteer /> */}
-            </Switch>
+            </Switch> */}
           </div>
         </section>
       </SighStyle>

@@ -3,6 +3,7 @@ import axios from "axios";
 import * as yup from "yup";
 import FormSchema from "./SchemaForms/FormSchemaV";
 import SubmitStyle from "./styles/RegisterStyle";
+import {useHistory} from 'react-router-dom';
 
 const valuesVolunteer = {
   username: "",
@@ -24,6 +25,7 @@ const RegisterVolunteer = () => {
   const [formValues, setFormValues] = useState(valuesVolunteer);
   const [formErrors, setFormErrors] = useState(errorsVolunteer);
   const [disabled, setDisabled] = useState(initialDisabled);
+  const history = useHistory();
 
   const getVolunteer = () => {
     axios
@@ -102,6 +104,13 @@ const RegisterVolunteer = () => {
     inputChange(name, value);
   };
 
+  // Unit 3 Code below
+  const backToHome = evt => {
+    evt.preventDefault();
+
+    history.push('/');
+  };
+
   return (
     <form className="form container" onSubmit={onSubmit}>
       <SubmitStyle>
@@ -160,6 +169,7 @@ const RegisterVolunteer = () => {
             />
           </label>
           <button disabled={disabled}>Sigh Up</button>
+          <input type='button' value='Already have an account' style={{background: 'olivedrab', color: 'red', marginTop: '10px'}} onClick={backToHome} />
         </div>
       </SubmitStyle>
     </form>
