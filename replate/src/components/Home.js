@@ -36,7 +36,8 @@ function Home() {
           </div>
         </section>
       </SighStyle>
-      <RegisterPickUp />
+      {/* Unit 3 moving <RegisterPickup> to Business Dashboard */}
+      {/* <RegisterPickUp /> */}
     </div>
   );
 }
