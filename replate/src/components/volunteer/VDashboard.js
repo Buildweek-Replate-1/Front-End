@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {getVUser} from '../../actions/allActions';
+import {getPendingPickups} from '../../actions/allActions';
 
 import VHead from './VHead';
 import VPending from './VPending';
@@ -9,27 +9,26 @@ import VComplete from './VComplete';
 
 const VDashboard = props => {
     useEffect(() => {
-        props.getVUser(props.username);
-        console.log('Dashboard useEffect - Testing data:', props.username);
-    }, [props.username]);
-
-    const vName = props.username;
-    console.log('Dashboard: Testing vName:', vName);
+        props.getPendingPickups();
+        console.log('VPending Pickups foodType check:', props.pickups);
+    }, []);
 
     return (
-        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-            <VHead />
-            <div style={{display: 'flex', height: '760px', width: '99%', margin: '20px 0', boxSizing: 'border-box'}}>
-                <div style={{width: '50%', height: '100%', boxSizing: 'border-box'}}>
-                    <div style={{width: '100%', height: '100%'}}>
+        <div style={{width: '100%', height: '100vh', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+            <div style={{width: '100%', height: '16%'}}>
+                <VHead />
+            </div>
+            <div style={{display: 'flex', height: '84%', width: '100%'}}>
+                <div style={{width: '42%', height: '100%', boxSizing: 'border-box', display: 'flex'}}>
+                    <div style={{width: '100%', height: '100%', background: '#9EAA4E'}}>
                         <VPending />
                     </div>
                 </div>
-                <div style={{width: '50%', height: '100%', boxSizing: 'border-box', display: 'flex'}}>
+                <div style={{width: '58%', height: '100%', boxSizing: 'border-box', display: 'flex'}}>
                     <div style={{width: '50%', height: '100%'}}>
                         <VAssigned />
                     </div>
-                    <div style={{width: '50%', height: '100%'}}>
+                    <div style={{width: '50%', height: '100%', background: '#464133', color: 'white'}}>
                         <VComplete />
                     </div>
                 </div>
@@ -39,10 +38,11 @@ const VDashboard = props => {
 };
 
 const mapStateToProps = state => {
-    console.log('Dashboard state:', state);
+    //console.log('Dashboard state:', state);
     return {
-        username: state.currentUser.username
+        //username: state.currentUser.username,
+        pickups: state.pickups
     };
 };
 
-export default connect(mapStateToProps, {getVUser})(VDashboard);
+export default connect(mapStateToProps, {getPendingPickups})(VDashboard);

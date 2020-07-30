@@ -32,9 +32,9 @@ const SighIn = props => {
     //Unit 3 Code below
     props.loginRequest(user);
     if(user.accountType === 'business') {
-      props.history.push('/business')
+      history.push('/business')
     } else if(user.accountType === 'volunteer') {
-      props.history.push('/volunteer');
+      history.push('/volunteer');
     }
   };
 

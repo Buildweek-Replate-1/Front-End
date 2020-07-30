@@ -3,7 +3,11 @@ import axios from "axios";
 import * as yup from "yup";
 import FormSchema from "./SchemaForms/FormSchemaB";
 import SubmitStyle from "./styles/RegisterStyle";
+
+// Unit 3 imports
 import {useHistory} from 'react-router-dom';
+import {FETCHING_DATA, CREATE_NEW_ACCT} from '../actions/allActions';
+import axiosWithAuth from '../utils/axiosWithAuth';
 
 const valuesBusiness = {
   username: "",
@@ -38,12 +42,16 @@ const RegisterBusiness = () => {
       })
       .catch((err) => console.log("err GET Business", err));
   };
-  const postNewBusiness = (newBusiness) => {
-    axios
-      .post("http://localhost:3000/", newBusiness)
+  const postNewBusiness = (newBusiness) => dispatch => {
+    // Unit 3 changed axios to axiosWithAuth() and changed POST endpoint
+    dispatch({type: FETCHING_DATA})
+    axiosWithAuth()
+      .post("/register", newBusiness)
       .then((res) => {
-        setBusiness([res.data, ...business]);
-        setFormValues(valuesBusiness);
+        dispatch({type: CREATE_NEW_ACCT});
+        //setBusiness([res.data, ...business]);
+        //setFormValues(valuesBusiness);
+        history.push('/business');
       })
       .catch((err) => console.log("err POST forms", err));
   };

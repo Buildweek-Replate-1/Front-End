@@ -3,7 +3,11 @@ import axios from "axios";
 import * as yup from "yup";
 import FormSchema from "./SchemaForms/FormSchemaV";
 import SubmitStyle from "./styles/RegisterStyle";
+
+// Unit 3 imports
 import {useHistory} from 'react-router-dom';
+import {FETCHING_DATA, CREATE_NEW_ACCT} from '../actions/allActions';
+import axiosWithAuth from '../utils/axiosWithAuth';
 
 const valuesVolunteer = {
   username: "",
@@ -37,12 +41,16 @@ const RegisterVolunteer = () => {
       .catch((err) => console.log("err GET Volunteer", err));
   };
 
-  const postNewVolunteer = (newVolunteer) => {
-    axios
-      .post("http://localhost:3000/", newVolunteer)
+  const postNewVolunteer = (newVolunteer) => dispatch => {
+    // Unit 3 changed axios to axiosWithAuth() and changed POST endpoint
+    dispatch({type: FETCHING_DATA})
+    axiosWithAuth()
+      .post("/register", newVolunteer)
       .then((res) => {
-        setVolunteer([res.data, ...volunteer]);
-        setFormValues(valuesVolunteer);
+        dispatch({type: CREATE_NEW_ACCT});
+        //setVolunteer([res.data, ...volunteer]);
+        //setFormValues(valuesVolunteer);
+        history.push('/volunteer');
       })
       .catch((err) => console.log("err POST forms", err));
   };
