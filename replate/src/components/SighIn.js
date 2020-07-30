@@ -1,30 +1,61 @@
 import React, { useState } from "react";
+import { checkPropTypes } from "prop-types";
 
-const SighIn = () => {
-  const [user, setUser] = useState({ username: "", password: "" });
+//Unit 3 imports
+import {Link, useHistory} from 'react-router-dom';
+import {loginRequest} from '../actions/allActions';
+import {connect} from 'react-redux';
 
+
+const SighIn = props => {
+  const [user, setUser] = useState({ accountType: "", username: "", password: "" });
+  const history = useHistory();
+
+  //Unit 3 moved NameChange to FormChange
   const NameChange = (event) => {
     setUser({ ...user, username: event.target.value });
   };
 
+  //Unit 3 moved PasswordChange to FormChange
   const PasswordChange = (event) => {
     setUser({ ...user, password: event.target.value });
+  };
+
+  const FormChange = (event) => {
+    setUser({...user, [event.target.name]: event.target.value});
   };
 
   const Submit = (event) => {
     event.preventDefault();
     console.log(user);
+
+    //Unit 3 Code below
+    props.loginRequest(user);
+    if(user.accountType === 'business') {
+      props.history.push('/business')
+    } else if(user.accountType === 'volunteer') {
+      props.history.push('/volunteer');
+    }
   };
 
   return (
     <div className="sighIn">
-      <form onSubmit={(event) => Submit(event)}>
+      <form onSubmit={Submit}>
+        <label>
+          Account Type:
+          <select name='accountType' onChange={FormChange}>
+            <option>--- Select ---</option>
+            <option value='business'>Business</option>
+            <option value='volunteer'>Volunteer</option>
+          </select>
+        </label>
         <label>
           Username:
           <input
             type="text"
             name="username"
-            onChange={(event) => NameChange(event)}
+            value={user.username}
+            onChange={FormChange}
           />
         </label>
         <label>
@@ -32,7 +63,8 @@ const SighIn = () => {
           <input
             type="text"
             name="password"
-            onChange={(event) => PasswordChange(event)}
+            value={user.password}
+            onChange={FormChange}
           />
         </label>
         <button>Sigh In</button>
@@ -40,4 +72,13 @@ const SighIn = () => {
     </div>
   );
 };
-export default SighIn;
+
+// Unit 3 code below
+const mapStateToProps = state => {
+    return {
+        username: state.currentUser.username,
+        id: state.currentUser.id
+    };
+};
+
+export default connect(mapStateToProps, {loginRequest})(SighIn);
