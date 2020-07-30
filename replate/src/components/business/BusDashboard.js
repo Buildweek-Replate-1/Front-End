@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 // import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import axios from "axios";
+import RegisterPickUp from "../PickUpRequest";
 
 
 
@@ -74,13 +75,9 @@ function BusForm() {
       });
   };
   return (
-    <BusSignUp className='signup'>
-  
+      <form className='form-inline' onSubmit={formSubmit}>
         <h2>Business Profile</h2>
         <h3>Login Form</h3>
-      
-
-      <form className='form-inline' onSubmit={formSubmit}>
         <div className="form-group">
             {/* //name */}
             <label htmlFor='name'>Name</label>
@@ -117,13 +114,12 @@ function BusForm() {
               Sign Up
             </button>
                <p className='signup-small-font'></p>
-                Already registared? Log in here{" "}
+                <div>Already registared? Log in here</div>
               {/* <Link to='/login' className='signup-link'>
                   here
         </Link> Log inlink can be added here if applicable */}
 
         </form>
-      </BusSignUp>
     
   );
 }

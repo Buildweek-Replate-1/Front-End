@@ -1,4 +1,5 @@
 import {FETCHING_DATA, CREATE_NEW_ACCT, GET_BUSINESS, UPDATE_BUSINESS, LOGIN_TO_ACCT, GET_VOL_DATA, GET_ALL_PICKUPS, CREATE_PICKUP} from '../actions/allActions';
+import {UPDATE_PICKUP} from '../actions/allActions';
 
 const initState = {
     isFetching: false,
@@ -39,6 +40,8 @@ export const reducer = (state = initState, action) => {
             return {...state, isFetching: false, currentUser: {...action.payload}};
         case GET_ALL_PICKUPS:
             return {...state, isFetching: false, };
+        case UPDATE_PICKUP:
+            return {...state, isFetching: false, pickups: [...action.payload]};
         default:
             return state;
     };

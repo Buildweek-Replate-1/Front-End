@@ -13,6 +13,7 @@ export const GET_BUS_DATA = 'GET_BUS_DATA';
 
 export const GET_ALL_PICKUPS = 'GET_ALL_PICKUPS';
 export const CREATE_PICKUP = 'CREATE_PICKUP';
+export const UPDATE_PICKUP = 'UPDATE_PICKUP';
 
 
 //let theUser = localStorage.getItem('user');
@@ -55,7 +56,20 @@ export const loginRequest = currentAcct => dispatch => {
         })
 };
 
-export const newPickup = currentOrder => dispatch => {};
+export const newPickup = currentOrder => dispatch => {
+    console.log('Inside action to create new Pickup Order');
+    dispatch({type: FETCHING_DATA})
+    axiosWithAuth()
+        .post('/pickup', currentOrder)
+        .then(res => {
+            console.log('New Pickup: Checking data:', res.data);
+            dispatch({type: CREATE_PICKUP});
+        })
+        .catch(err => {
+            console.log('Unable to create the new Pickup Order');
+            console.dir(err);
+        })
+};
 
 
 // READS -- /business, /volunteer, /business/username, /volunteer/username, /pickup
@@ -135,7 +149,19 @@ export const updateBUser = businessData => dispatch => {
 
 export const updateVUser = volunteerData => dispatch => {};
 
-export const updatePickup = pickupData => dispatch => {};
+export const updatePickup = pickupData => dispatch => {
+    dispatch({type: FETCHING_DATA})
+    axiosWithAuth()
+        .put(`/pickup/${pickupData.id}`, pickupData)
+        .then(res => {
+            console.log('Updated Pickup Order, checking new data:', res.data);
+            dispatch({type: UPDATE_PICKUP, payload: res.data});
+        })
+        .catch(err => {
+            console.log('Error updating Pickup Order');
+            console.dir(err);
+        })
+};
 
 
 // DELETES -- /business/username, /volunteer/username, /pickup/delete
