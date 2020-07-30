@@ -70,18 +70,18 @@ export const getBusiness = () => dispatch => {
 
 export const getVolunteer = () => dispatch => {};
 
-// export const getBusUser = (username) => dispatch => {
-//     dispatch({type: GET_BUS_DATA})
-//     axiosWithAuth()
-//     .get('business/username')
-//     .then(res => {
-//         const fetchedBusUser = {};
-//         dispatch({type: GET_BUSINESS, payload: fetchedBusUser});
-//     })
-//     .catch(err => {
-//         console.log('');
-//     })
-// };
+export const getBusUser = (username) => dispatch => {
+    dispatch({type: GET_BUS_DATA})
+    axiosWithAuth()
+    .get(`/business/${username}`)
+    .then(res => {
+        const fetchedBusUser = {};
+        dispatch({type: GET_BUSINESS, payload: res.data});
+    })
+    .catch(err => {
+        console.log('');
+    })
+};
 
 export const getVUser = (username) => dispatch => {
     console.log('Inside getVUser in actions', username);
