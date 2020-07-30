@@ -1,41 +1,43 @@
 import React, { useState } from "react";
 
-const SigIn = () => {
-  const [saved, setSaved] = useState([]);
+const SighIn = () => {
+  const [user, setUser] = useState({ username: "", password: "" });
+
+  const NameChange = (event) => {
+    setUser({ ...user, username: event.target.value });
+  };
+
+  const PasswordChange = (event) => {
+    setUser({ ...user, password: event.target.value });
+  };
+
+  const Submit = (event) => {
+    event.preventDefault();
+    console.log(user);
+  };
 
   return (
-    <form className="form container" onSubmit={onSubmit}>
-      <div className="form-group submit">
-        <div className="errors">
-          <div>{errors.username}</div>
-          <div>{errors.password}</div>
-        </div>
-      </div>
-
-      <div className="form-group inputs">
+    <div className="sighIn">
+      <form onSubmit={(event) => Submit(event)}>
         <label>
-          Username&nbsp;
+          Username:
           <input
-            value={values.username}
-            onChange={onInputChange}
-            name="username"
             type="text"
-            className="inputone"
+            name="username"
+            onChange={(event) => NameChange(event)}
           />
         </label>
-
         <label>
-          Password&nbsp;
+          Password:
           <input
-            value={values.password}
-            onChange={onInputChange}
-            name="username"
             type="text"
-            className="inputone"
+            name="password"
+            onChange={(event) => PasswordChange(event)}
           />
         </label>
-      </div>
-    </form>
+        <button>Sigh In</button>
+      </form>
+    </div>
   );
 };
-export default SigIn;
+export default SighIn;

@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import * as yup from "yup";
-import { Switch, Route } from "react-router-dom";
-import FormSchema from "./FormSchema";
+import FormSchema from "./SchemaForms/FormSchemaB";
 import SubmitStyle from "./styles/RegisterStyle";
 
-const values = {
+const valuesBusiness = {
   username: "",
   businessName: "",
   businessAddress: "",
   phoneNumber: "",
   password: "",
 };
-const errors = {
+const errorsBusiness = {
   username: "",
   businessName: "",
   businessAddress: "",
@@ -24,8 +23,8 @@ const initialDisabled = true;
 
 const RegisterBusiness = () => {
   const [business, setBusiness] = useState([initialBusiness]);
-  const [formValues, setFormValues] = useState(values); // object
-  const [formErrors, setFormErrors] = useState(errors); // object
+  const [formValues, setFormValues] = useState(valuesBusiness);
+  const [formErrors, setFormErrors] = useState(errorsBusiness);
   const [disabled, setDisabled] = useState(initialDisabled);
 
   const getBusiness = () => {
@@ -36,6 +35,15 @@ const RegisterBusiness = () => {
         console.log("DATA is", response.data.data);
       })
       .catch((err) => console.log("err GET Business", err));
+  };
+  const postNewBusiness = (newBusiness) => {
+    axios
+      .post("http://localhost:3000/", newBusiness)
+      .then((res) => {
+        setBusiness([res.data, ...business]);
+        setFormValues(valuesBusiness);
+      })
+      .catch((err) => console.log("err POST forms", err));
   };
 
   const inputChange = (name, value) => {
@@ -51,7 +59,7 @@ const RegisterBusiness = () => {
       .catch((err) => {
         setFormErrors({
           ...formErrors,
-          [name]: err.errors[0],
+          [name]: err.errors,
         });
       });
 
@@ -67,20 +75,11 @@ const RegisterBusiness = () => {
       username: formValues.username.trim(),
       businessName: formValues.businessName.trim(),
       businessAddress: formValues.businessAddress.trim(),
+      phoneNumber: formValues.phoneNumber.trim(),
       password: formValues.password.trim(),
     };
 
     postNewBusiness(newBusiness);
-  };
-
-  const postNewBusiness = (newBusiness) => {
-    axios
-      .post("http://localhost:3000/", newBusiness)
-      .then((res) => {
-        setBusiness([res.data, ...business]);
-        setFormValues(values);
-      })
-      .catch((err) => console.log("err POST forms", err));
   };
 
   useEffect(() => {
@@ -93,7 +92,7 @@ const RegisterBusiness = () => {
     });
   }, [formValues]);
 
-  console.log(values);
+  console.log(formValues);
 
   const onSubmit = (evt) => {
     evt.preventDefault();
@@ -102,8 +101,8 @@ const RegisterBusiness = () => {
 
   const onInputChange = (evt) => {
     const { name, value } = evt.target;
-    console.log(name, value);
-    debugger;
+
+    // debugger;
     inputChange(name, value);
   };
 
@@ -111,11 +110,11 @@ const RegisterBusiness = () => {
     <form className="form container" onSubmit={onSubmit}>
       <SubmitStyle>
         <div className="errors">
-          <div>{errors.username}</div>
-          <div>{errors.businessName}</div>
-          <div>{errors.businessAddress}</div>
-          <div>{errors.phoneNumber}</div>
-          <div>{errors.password}</div>
+          <div>{formErrors.username}</div>
+          <div>{formErrors.businessName}</div>
+          <div>{formErrors.businessAddress}</div>
+          <div>{formErrors.phoneNumber}</div>
+          <div>{formErrors.password}</div>
         </div>
 
         <div>
@@ -125,7 +124,7 @@ const RegisterBusiness = () => {
           <label>
             Username&nbsp;
             <input
-              value={values.username}
+              value={formValues.username}
               onChange={onInputChange}
               name="username"
               type="text"
@@ -135,7 +134,7 @@ const RegisterBusiness = () => {
           <label>
             Business Name&nbsp;
             <input
-              value={values.businessName}
+              value={formValues.businessName}
               onChange={onInputChange}
               name="businessName"
               type="text"
@@ -145,9 +144,9 @@ const RegisterBusiness = () => {
           <label>
             Business Address&nbsp;
             <input
-              value={values.businessAddress}
+              value={formValues.businessAddress}
               onChange={onInputChange}
-              name="phoneNumber"
+              name="businessAddress"
               type="text"
               className="inputone"
             />
@@ -155,7 +154,7 @@ const RegisterBusiness = () => {
           <label>
             Phone Number&nbsp;
             <input
-              value={values.phoneNumber}
+              value={formValues.phoneNumber}
               onChange={onInputChange}
               name="phoneNumber"
               type="text"
@@ -166,14 +165,14 @@ const RegisterBusiness = () => {
           <label>
             Password&nbsp;
             <input
-              value={values.password}
+              value={formValues.password}
               onChange={onInputChange}
-              name="username"
+              name="password"
               type="text"
               className="inputone"
             />
           </label>
-          <button disabled={disabled}>submit</button>
+          <button disabled={disabled}>Sigh Up</button>
         </div>
       </SubmitStyle>
     </form>

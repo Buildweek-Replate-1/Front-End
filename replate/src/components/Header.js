@@ -1,12 +1,16 @@
 import React from "react";
-// import SighIn from "./SighIn";
+import SighIn from "./SighIn";
+import SighStyle from "./styles/HomeStyle";
 
 function Header() {
   return (
     <div className="header">
-      <div>
-        <h1>Header must be build</h1>
-      </div>
+      <SighStyle>
+        <div>
+          <h1>Re-plate</h1>
+          <SighIn />
+        </div>
+      </SighStyle>
     </div>
   );
 }

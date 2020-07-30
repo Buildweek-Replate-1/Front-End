@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import * as yup from "yup";
-import { Switch, Route } from "react-router-dom";
-import FormSchema from "./FormSchema";
+import FormSchema from "./SchemaForms/FormSchemaV";
 import SubmitStyle from "./styles/RegisterStyle";
 
-const values = {
+const valuesVolunteer = {
   username: "",
   volunteerName: "",
   phoneNumber: "",
   password: "",
 };
-const errors = {
+const errorsVolunteer = {
   username: "",
   volunteerName: "",
   phoneNumber: "",
@@ -22,8 +21,8 @@ const initialDisabled = true;
 
 const RegisterVolunteer = () => {
   const [volunteer, setVolunteer] = useState([initialVolunteer]);
-  const [formValues, setFormValues] = useState(values); // object
-  const [formErrors, setFormErrors] = useState(errors); // object
+  const [formValues, setFormValues] = useState(valuesVolunteer);
+  const [formErrors, setFormErrors] = useState(errorsVolunteer);
   const [disabled, setDisabled] = useState(initialDisabled);
 
   const getVolunteer = () => {
@@ -41,7 +40,7 @@ const RegisterVolunteer = () => {
       .post("http://localhost:3000/", newVolunteer)
       .then((res) => {
         setVolunteer([res.data, ...volunteer]);
-        setFormValues(values);
+        setFormValues(valuesVolunteer);
       })
       .catch((err) => console.log("err POST forms", err));
   };
@@ -59,7 +58,7 @@ const RegisterVolunteer = () => {
       .catch((err) => {
         setFormErrors({
           ...formErrors,
-          [name]: err.errors[0],
+          [name]: err.errors,
         });
       });
 
@@ -71,7 +70,15 @@ const RegisterVolunteer = () => {
 
   const submit = (e) => {
     console.log(formValues);
+    const newVolunteer = {
+      username: formValues.username.trim(),
+      volunteerName: formValues.volunteerName.trim(),
+      phoneNumber: formValues.phoneNumber.trim(),
+      password: formValues.password.trim(),
+    };
+    postNewVolunteer(newVolunteer);
   };
+
   useEffect(() => {
     getVolunteer();
   }, []);
@@ -82,7 +89,7 @@ const RegisterVolunteer = () => {
     });
   }, [formValues]);
 
-  console.log(values);
+  console.log(formValues);
 
   const onSubmit = (evt) => {
     evt.preventDefault();
@@ -91,7 +98,6 @@ const RegisterVolunteer = () => {
 
   const onInputChange = (evt) => {
     const { name, value } = evt.target;
-    console.log(name, value);
     // debugger;
     inputChange(name, value);
   };
@@ -101,10 +107,10 @@ const RegisterVolunteer = () => {
       <SubmitStyle>
         <div className="form-group submit">
           <div className="errors">
-            <div>{errors.username}</div>
-            <div>{errors.volunteerName}</div>
-            <div>{errors.phoneNumber}</div>
-            <div>{errors.password}</div>
+            <div>{formErrors.username}</div>
+            <div>{formErrors.volunteerName}</div>
+            <div>{formErrors.phoneNumber}</div>
+            <div>{formErrors.password}</div>
           </div>
         </div>
         <div>
@@ -115,7 +121,7 @@ const RegisterVolunteer = () => {
           <label>
             Username&nbsp;
             <input
-              value={values.username}
+              value={formValues.username}
               onChange={onInputChange}
               name="username"
               type="text"
@@ -125,7 +131,7 @@ const RegisterVolunteer = () => {
           <label>
             Volunteer Name&nbsp;
             <input
-              value={values.volunteerName}
+              value={formValues.volunteerName}
               onChange={onInputChange}
               name="volunteerName"
               type="text"
@@ -135,7 +141,7 @@ const RegisterVolunteer = () => {
           <label>
             Phone Number&nbsp;
             <input
-              value={values.phoneNumber}
+              value={formValues.phoneNumber}
               onChange={onInputChange}
               name="phoneNumber"
               type="text"
@@ -146,14 +152,14 @@ const RegisterVolunteer = () => {
           <label>
             Password&nbsp;
             <input
-              value={values.password}
+              value={formValues.password}
               onChange={onInputChange}
-              name="username"
+              name="password"
               type="text"
               className="inputone"
             />
           </label>
-          <button disabled={disabled}>submit</button>
+          <button disabled={disabled}>Sigh Up</button>
         </div>
       </SubmitStyle>
     </form>
