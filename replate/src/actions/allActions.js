@@ -8,6 +8,7 @@ export const GET_VOLUNTEER = 'GET VOLUNTEER';
 export const UPDATE_BUSINESS = 'UPDATE_BUSINESS';
 export const UPDATE_VOLUNTEER = 'UPDATE_VOLUNTEER';
 export const GET_VOL_DATA = 'GET_VOL_DATA';
+export const GET_BUS_DATA = 'GET_BUS_DATA';
 
 //let theUser = localStorage.getItem('user');
 
@@ -69,7 +70,18 @@ export const getBusiness = () => dispatch => {
 
 export const getVolunteer = () => dispatch => {};
 
-export const getBUser = () => dispatch => {};
+// export const getBusUser = (username) => dispatch => {
+//     dispatch({type: GET_BUS_DATA})
+//     axiosWithAuth()
+//     .get('business/username')
+//     .then(res => {
+//         const fetchedBusUser = {};
+//         dispatch({type: GET_BUSINESS, payload: fetchedBusUser});
+//     })
+//     .catch(err => {
+//         console.log('');
+//     })
+// };
 
 export const getVUser = (username) => dispatch => {
     console.log('Inside getVUser in actions', username);
