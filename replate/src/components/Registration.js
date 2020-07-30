@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Link, useHistory} from 'react-router-dom';
+import {Link, useHistory} from 'react';
 import {registerRequest} from '../actions/allActions';
 import {connect} from 'react-redux';
 
