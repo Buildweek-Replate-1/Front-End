@@ -1,44 +1,27 @@
 import React from "react";
 import { Switch, Route, Link } from "react-router-dom";
+import Header from "./Header";
 import RegisterBusiness from "./RegisterBusiness";
 import RegisterVolunteer from "./RegisterVolunteer";
-import RegisterPickUp from "./PickUpRequest";
-import Header from "./Header";
-import SighStyle from "./styles/HomeStyle";
+import BusinessDashboard from "./BusinessDashboard";
+// import SighStyle from "./styles/HomeStyle";
 
 function Home() {
   return (
     <div className="FormSighs">
-      <SighStyle>
-        <Header />
-        <section>
-          <div className="main"></div>
-          <div className="buttons">
-            <Link to="/RegisterBusiness">
-              <button> Register for Business </button>
-            </Link>
-            <Link to="/RegisterVolunteer">
-              <button>Register for Volunteer</button>
-            </Link>
-            <Switch>
-              <Route
-                exact
-                path="/RegisterBusiness"
-                component={RegisterBusiness}
-              />
-              <Route
-                exact
-                path="/RegisterVolunteer"
-                component={RegisterVolunteer}
-              />
+      <Switch>
+        <Route exact path="/RegisterBusiness">
+          <Header />
+          <RegisterBusiness />
+        </Route>
 
-              {/* <RegisterBusiness /> */}
-              {/* <RegisterVolunteer /> */}
-            </Switch>
-          </div>
-        </section>
-      </SighStyle>
-      <RegisterPickUp />
+        <Route exact path="/RegisterVolunteer">
+          <Header />
+          <RegisterVolunteer />
+        </Route>
+        <Route exact path="/BusinessDashboard" component={BusinessDashboard} />
+        <Route exact path="/" component={Header} />
+      </Switch>
     </div>
   );
 }

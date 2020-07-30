@@ -33,6 +33,8 @@ const RegisterPickUp = () => {
       .catch((err) => console.log("err GET PickUp", err));
   };
   const postNewPickUp = (newPickUp) => {
+    console.log("Submitted values: ", newPickUp);
+
     axios
       .post("http://localhost:3000/", newPickUp)
       .then((res) => {
@@ -66,7 +68,7 @@ const RegisterPickUp = () => {
   };
 
   const submit = (e) => {
-    console.log(formValues);
+    // console.log(formValues);
     const newPickUp = {
       type: formValues.type.trim(),
       amount: formValues.amount.trim(),
@@ -85,8 +87,6 @@ const RegisterPickUp = () => {
       setDisabled(!valid);
     });
   }, [formValues]);
-
-  console.log(formValues);
 
   const onSubmit = (evt) => {
     evt.preventDefault();

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "uuvu",
+    "type": "Drinks",
+    "amount": "34",
+    "preferredPickupTime": "01/02/2020"
+  },
+  {
+    "id": "uuvu",
+    "type": "Appitazer",
+    "amount": "40",
+    "preferredPickupTime": "11/22/2020"
+  },
+  {
+    "id": "uuvu",
+    "type": "Main Dishes",
+    "amount": "50",
+    "preferredPickupTime": "07/25/2021"
+  }
+]
