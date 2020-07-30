@@ -77,6 +77,8 @@ const RegisterVolunteer = () => {
       volunteerName: formValues.volunteerName.trim(),
       phoneNumber: formValues.phoneNumber.trim(),
       password: formValues.password.trim(),
+      // Unit 3 added accountType for API
+      accountType: 'volunteer'
     };
     postNewVolunteer(newVolunteer);
   };
