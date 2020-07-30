@@ -42,11 +42,6 @@ export const loginRequest = currentAcct => dispatch => {
         .post('/login', currentAcct)
         .then(res => {
             console.log('Testing data when logging in:', res.data);
-            localStorage.setItem('token', res.data.token);
-
-            dispatch({type: LOGIN_TO_ACCT});
-
-            console.log('Testing token at Login:', localStorage);
             dispatch({type: LOGIN_TO_ACCT, payload: currentAcct});
 
         })
