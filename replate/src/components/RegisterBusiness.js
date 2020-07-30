@@ -6,8 +6,10 @@ import SubmitStyle from "./styles/RegisterStyle";
 
 // Unit 3 imports
 import {useHistory} from 'react-router-dom';
-import {FETCHING_DATA, CREATE_NEW_ACCT} from '../actions/allActions';
-import axiosWithAuth from '../utils/axiosWithAuth';
+import {registerRequest} from '../actions/allActions';
+import {connect} from 'react-redux';
+//import {FETCHING_DATA, CREATE_NEW_ACCT} from '../actions/allActions';
+//import axiosWithAuth from '../utils/axiosWithAuth';
 
 const valuesBusiness = {
   username: "",
@@ -26,7 +28,7 @@ const errorsBusiness = {
 const initialBusiness = [];
 const initialDisabled = true;
 
-const RegisterBusiness = () => {
+const RegisterBusiness = props => {
   const [business, setBusiness] = useState([initialBusiness]);
   const [formValues, setFormValues] = useState(valuesBusiness);
   const [formErrors, setFormErrors] = useState(errorsBusiness);
@@ -42,8 +44,13 @@ const RegisterBusiness = () => {
       })
       .catch((err) => console.log("err GET Business", err));
   };
-  const postNewBusiness = (newBusiness) => dispatch => {
+  const postNewBusiness = (newBusiness) => {
     // Unit 3 changed axios to axiosWithAuth() and changed POST endpoint
+    console.log('REG-BSN data test:', newBusiness);
+    // Console Log testing shows we're able to get to submit() and populate object correctly, but call to this function doesn't happen
+    // Will use connect instead to dispatch via actions to reducer. Will have to comment out this axios
+
+    /*
     dispatch({type: FETCHING_DATA})
     axiosWithAuth()
       .post("/register", newBusiness)
@@ -54,6 +61,10 @@ const RegisterBusiness = () => {
         history.push('/business');
       })
       .catch((err) => console.log("err POST forms", err));
+      */
+
+      props.registerRequest(newBusiness);
+      props.history.push('/business');
   };
 
   const inputChange = (name, value) => {
@@ -90,6 +101,8 @@ const RegisterBusiness = () => {
       // Unit 3 added accountType for API
       accountType: 'business'
     };
+    // Unit 3 debug test output
+    console.log('NEW-BSN OBJ:', newBusiness);
 
     postNewBusiness(newBusiness);
   };
@@ -197,4 +210,12 @@ const RegisterBusiness = () => {
     </form>
   );
 };
-export default RegisterBusiness;
+
+const mapStateToProps = state => {
+    return {
+        username: state.currentUser.username,
+        id: state.currentUser.id
+    };
+};
+
+export default connect(mapStateToProps, {registerRequest})(RegisterBusiness);

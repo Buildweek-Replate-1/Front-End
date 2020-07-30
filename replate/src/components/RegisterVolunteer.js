@@ -6,8 +6,10 @@ import SubmitStyle from "./styles/RegisterStyle";
 
 // Unit 3 imports
 import {useHistory} from 'react-router-dom';
-import {FETCHING_DATA, CREATE_NEW_ACCT} from '../actions/allActions';
-import axiosWithAuth from '../utils/axiosWithAuth';
+import {registerRequest} from '../actions/allActions';
+import {connect} from 'react-redux';
+//import {FETCHING_DATA, CREATE_NEW_ACCT} from '../actions/allActions';
+//import axiosWithAuth from '../utils/axiosWithAuth';
 
 const valuesVolunteer = {
   username: "",
@@ -24,7 +26,7 @@ const errorsVolunteer = {
 const initialVolunteer = [];
 const initialDisabled = true;
 
-const RegisterVolunteer = () => {
+const RegisterVolunteer = props => {
   const [volunteer, setVolunteer] = useState([initialVolunteer]);
   const [formValues, setFormValues] = useState(valuesVolunteer);
   const [formErrors, setFormErrors] = useState(errorsVolunteer);
@@ -41,8 +43,13 @@ const RegisterVolunteer = () => {
       .catch((err) => console.log("err GET Volunteer", err));
   };
 
-  const postNewVolunteer = (newVolunteer) => dispatch => {
+  const postNewVolunteer = (newVolunteer) => {
     // Unit 3 changed axios to axiosWithAuth() and changed POST endpoint
+    console.log('REG-VOL data test:', newVolunteer);
+    // Console Log testing shows we're able to get to submit() and populate object correctly, but call to this function doesn't happen
+    // Will use connect instead to dispatch via actions to reducer. Will have to comment out this axios
+
+    /*
     dispatch({type: FETCHING_DATA})
     axiosWithAuth()
       .post("/register", newVolunteer)
@@ -53,6 +60,10 @@ const RegisterVolunteer = () => {
         history.push('/volunteer');
       })
       .catch((err) => console.log("err POST forms", err));
+      */
+
+      props.registerRequest(newVolunteer);
+      props.history.push('/volunteer');
   };
 
   const inputChange = (name, value) => {
@@ -88,6 +99,8 @@ const RegisterVolunteer = () => {
       // Unit 3 added accountType for API
       accountType: 'volunteer'
     };
+    console.log('NEW-VOL OBJ:', newVolunteer);
+
     postNewVolunteer(newVolunteer);
   };
 
@@ -185,4 +198,12 @@ const RegisterVolunteer = () => {
     </form>
   );
 };
-export default RegisterVolunteer;
+
+const mapStateToProps = state => {
+    return {
+        username: state.currentUser.username,
+        id: state.currentUser.id
+    };
+};
+
+export default connect(mapStateToProps, {registerRequest})(RegisterVolunteer);
