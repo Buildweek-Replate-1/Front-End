@@ -1,5 +1,4 @@
 import React from "react";
-import data from "./requests.json";
 
 function ReqList({ details }) {
   if (!details) {

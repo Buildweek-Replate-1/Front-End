@@ -8,7 +8,9 @@ function Header() {
     <div>
       <SighStyle>
         <div className="header">
-          <h1>Re-plate</h1>
+          <div>
+            <h1>Re-plate</h1>
+          </div>
           <SighIn />
         </div>
         <div className="buttons">
