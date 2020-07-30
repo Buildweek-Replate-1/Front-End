@@ -8,7 +8,12 @@ export const GET_VOLUNTEER = 'GET VOLUNTEER';
 export const UPDATE_BUSINESS = 'UPDATE_BUSINESS';
 export const UPDATE_VOLUNTEER = 'UPDATE_VOLUNTEER';
 export const GET_VOL_DATA = 'GET_VOL_DATA';
+
 export const GET_BUS_DATA = 'GET_BUS_DATA';
+
+export const GET_ALL_PICKUPS = 'GET_ALL_PICKUPS';
+export const CREATE_PICKUP = 'CREATE_PICKUP';
+
 
 //let theUser = localStorage.getItem('user');
 
@@ -50,7 +55,7 @@ export const loginRequest = currentAcct => dispatch => {
         })
 };
 
-export const newPickup = () => dispatch => {};
+export const newPickup = currentOrder => dispatch => {};
 
 
 // READS -- /business, /volunteer, /business/username, /volunteer/username, /pickup
@@ -96,6 +101,21 @@ export const getVUser = (username) => dispatch => {
             console.log('Error fetching specified Volunteer Username');
             console.dir(err);
         })
+};
+
+export const getPendingPickups = () => dispatch => {
+    console.log('Inside Pending Pickups');
+    dispatch({type: FETCHING_DATA})
+    axiosWithAuth()
+        .get('/pickup')
+        .then(res => {
+            console.log('Checking pickup list', res.data);
+            dispatch({type: GET_ALL_PICKUPS});
+        })
+        .catch(err => {
+            console.dir(err);
+        })
+
 };
 
 

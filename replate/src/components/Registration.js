@@ -96,6 +96,14 @@ const Registration = props => {
         <div>
             <form style={{width: '400px', display: 'flex', flexDirection: 'column', alignItems: 'center'}} onSubmit={submitForm}>
                 <h2>Register form</h2>
+                <div>
+                    <label>Registering as:</label>
+                    <select>
+                        <option name='accountType'>--- Select One ---</option>
+                        <option value='business'>Business</option>
+                        <option value='volunteer'>Volunteer</option>
+                    </select>
+                </div>
                 <div style={{width: '350px', display: 'flex', justifyContent: 'space-between'}}>
                     <input type='button' value='Test Business' onClick={submitBsn} />
                     <input type='button' value='Test Volunteer' onClick={submitVol} />
