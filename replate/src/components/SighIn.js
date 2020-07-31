@@ -30,6 +30,7 @@ const SighIn = props => {
     console.log(user);
 
     //Unit 3 Code below
+    localStorage.setItem('username', user.username);
     props.loginRequest(user);
     if(user.accountType === 'business') {
       history.push('/business')
