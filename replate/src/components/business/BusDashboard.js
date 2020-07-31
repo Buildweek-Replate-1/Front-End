@@ -5,9 +5,24 @@ import * as Yup from "yup";
 import axios from "axios";
 import RegisterPickUp from "../PickUpRequest";
 
+// Added imports from Peter
+import {connect} from 'react-redux';
+import {getPendingPickups, updatePickup} from '../../actions/allActions';
+import BHead from './BHead';
+import BPending from './BPending';
+import BAssigned from './BAssigned';
+import BComplete from './BComplete';
+import OrderForm from './OrderForm';
 
 
-function BusForm() {
+
+function BusForm(props) {
+  useEffect(() => {
+    props.getPendingPickups();
+    console.log('BusForm foodType check:', props.pickups);
+  }, []);
+
+  /*
   const [errors, setErrors] = useState({
     name: "",
     email: "",
@@ -74,54 +89,32 @@ function BusForm() {
         console.log(err.response);
       });
   };
+  */
+
   return (
-      <form className='form-inline' onSubmit={formSubmit}>
-        <h2>Business Profile</h2>
-        <h3>Login Form</h3>
-        <div className="form-group">
-            {/* //name */}
-            <label htmlFor='name'>Name</label>
-            <input
-              className='input form-control'
-              type='text'
-              id='name'
-              name='name'
-              onChange={inputChange}
-              value={formState.name}
-            />
-        </div>
-                      {/* {errors.name.length > 0 ? (
-                <p className='error'>{errors.name}</p>
-              ) : null} */}
-            
-
-        <div className="form-group">
-          {/* //email */}
-          <label htmlFor='email'>Email</label>
-          <input
-            className='input form-control'
-            type='email'
-            id='email'
-            name='email'
-            onChange={inputChange}
-            value={formState.email}
-          />
-        </div> 
-            {/* {errors.email.length > 0 ? (
-              <p className='error'>{errors.email}</p>
-            ) : null} */}
-          <button className='signup-btn btn btn-default' type='submit'>
-              Sign Up
-            </button>
-               <p className='signup-small-font'></p>
-                <div>Already registared? Log in here</div>
-              {/* <Link to='/login' className='signup-link'>
-                  here
-        </Link> Log inlink can be added here if applicable */}
-
-        </form>
-    
+    <div style={{width: '100%', height: '100vh', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+      {/* From Peter: I'm not sure which of my team members to apologize to, but I had no alternative than to delete the form created here.
+          Even commenting them out and creating a new div outside of it wasn't allowed. I know you had styling implemented.
+          But at least the functionality of the login form that used to be here is now on the Front-End base page.
+      */}
+            <div style={{width: '100%', height: '16%'}}>
+                <BHead />
+            </div>
+            <div style={{display: 'flex', height: '84%', width: '100%'}}>
+                <div style={{width: '25%', height: '100%', boxSizing: 'border-box', background: '#2F323A', color: '#D9332A'}}><OrderForm /></div>
+                <div style={{width: '25%', height: '100%', boxSizing: 'border-box', background: '#9EAA4E'}}><BPending /></div>
+                <div style={{width: '25%', height: '100%', boxSizing: 'border-box'}}><BAssigned /></div>
+                <div style={{width: '25%', height: '100%', boxSizing: 'border-box', background: '#464133', color: 'white'}}><BComplete /></div>
+            </div>
+    </div>
   );
-}
+};
 
-export default BusForm;
+const mapStateToProps = state => {
+    return {
+        //username: state.currentUser.username,
+        pickups: state.pickups
+    };
+};
+
+export default connect(mapStateToProps, {getPendingPickups, updatePickup})(BusForm);

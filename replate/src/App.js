@@ -6,8 +6,11 @@ import './App.css';
 import Registration from './components/Registration';
 import Login from './components/Login';
 //import Business from './components/business/Business';
-import BusForm from './components/business/BusDashboard';
+
+// Business-specific Components
 import RegisterBusiness from './components/RegisterBusiness';
+import BusForm from './components/business/BusDashboard';
+import BCard from './components/business/BCard';
 
 // Volunteer-specific Components
 import RegisterVolunteer from './components/RegisterVolunteer';
@@ -28,6 +31,7 @@ function App() {
         <Route path='/business' component={BusForm} />
         <Route path='/RegisterBusiness' component={RegisterBusiness} />
         <Route path='/RegisterVolunteer' component={RegisterVolunteer} />
+        <Route path ='/business/pickups/:id' component={BCard} />
         <Route path ='/volunteer/pickups/:id' component={VCard} />
       </BrowserRouter>
     </div>
