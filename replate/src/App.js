@@ -2,7 +2,7 @@ import Home from "./components/Home";
 import React from 'react';
 import {BrowserRouter, Route} from 'react-router-dom';
 import './App.css';
-// import PrivateRoute from './components/PrivateRoute';
+import PrivateRoute from './components/PrivateRoute';
 import Registration from './components/Registration';
 import Login from './components/Login';
 //import Business from './components/business/Business';
@@ -27,12 +27,12 @@ function App() {
         </Route>
         <Route path='/register' component={Registration} />
         {/* <Route path='/business' component={Business} /> */}
-        <Route exact path='/volunteer' component={VDashboard} />
-        <Route exact path='/business' component={BusForm} />
-        <Route path='/RegisterBusiness' component={RegisterBusiness} />
-        <Route path='/RegisterVolunteer' component={RegisterVolunteer} />
-        <Route path ='/business/pickups/:id' component={BCard} />
-        <Route path ='/volunteer/pickups/:id' component={VCard} />
+        <PrivateRoute exact path='/volunteer' component={VDashboard} />
+        <PrivateRoute exact path='/business' component={BusForm} />
+        <PrivateRoute path='/RegisterBusiness' component={RegisterBusiness} />
+        <PrivateRoute path='/RegisterVolunteer' component={RegisterVolunteer} />
+        <PrivateRoute path ='/business/pickups/:id' component={BCard} />
+        <PrivateRoute path ='/volunteer/pickups/:id' component={VCard} />
       </BrowserRouter>
     </div>
   );
