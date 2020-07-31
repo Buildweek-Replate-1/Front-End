@@ -7,7 +7,7 @@ function Header() {
     <div className="header">
       <SighStyle>
         <div>
-          <h1>Re-plate</h1>
+          <h1>Replate</h1>
           <SighIn />
         </div>
       </SighStyle>

@@ -25,7 +25,7 @@ const RegisterPickUp = () => {
 
   const getPickUp = () => {
     axios
-      .get("http://localhost:3000/")
+      .get("/pickup")
       .then((response) => {
         setPickUp(response.data.data);
         console.log("DATA is", response.data.data);
@@ -34,7 +34,7 @@ const RegisterPickUp = () => {
   };
   const postNewPickUp = (newPickUp) => {
     axios
-      .post("http://localhost:3000/", newPickUp)
+      .post("/pickup", newPickUp)
       .then((res) => {
         setPickUp([res.data, ...pickUp]);
         setFormValues(valuesPickUp);
