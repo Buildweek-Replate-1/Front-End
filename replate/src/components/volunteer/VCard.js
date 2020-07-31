@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Link, useParams, useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {connect} from 'react-redux';
-import {updatePickup} from '../../actions/allActions';
+import {updatePickup, deletePickup} from '../../actions/allActions';
 
 const VCard = props => {
     const {id} = useParams();
@@ -24,7 +24,7 @@ const VCard = props => {
         evt.preventDefault();
 
         const acceptData = {
-            id: props.pickups.id,
+            id: foodItem.id,
             status: 'Assigned'
         };
 
@@ -36,7 +36,7 @@ const VCard = props => {
         evt.preventDefault();
 
         const rejectData = {
-            id: props.pickups.id,
+            id: foodItem.id,
             status: 'Pending'
         };
         
@@ -48,7 +48,7 @@ const VCard = props => {
         evt.preventDefault();
 
         const completeData = {
-            id: props.pickups.id,
+            id: foodItem.id,
             status: 'Complete'
         };
         
@@ -56,11 +56,14 @@ const VCard = props => {
         history.push('/volunteer');
     };
 
-    const deletePickup = evt => {
+    const deletePU = evt => {
         evt.preventDefault();
+
+        props.deletePickup(foodItem);
+        props.history.push('/volunteer');
     };
 
-    console.log('FOODITEM', foodItem);
+    console.log('Inside VCard: FOODITEM', foodItem);
     return (
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <div>Food ID: {foodItem.id}</div>
@@ -76,7 +79,7 @@ const VCard = props => {
                 {foodItem.status === 'Pending' ? <input type='button' value='Accept' onClick={acceptPickup} /> : <></>}
                 {(foodItem.status === 'Assigned' && foodItem.volunteerAccountID === props.id) ? <input type='button' value='Complete' onClick={completePickup} /> : <></>}
                 {(foodItem.status === 'Pending' || (foodItem.status === 'Assigned' && foodItem.volunteerAccountID === props.id)) ? <input type='button' value='Reject' onClick={rejectPickup} /> : <></>}
-                {(foodItem.status === 'Complete' && foodItem.volunteerAccountID === props.id) ? <input type='button' value='Clear Complete' onClick={deletePickup} /> : <></>}
+                {(foodItem.status === 'Complete' && foodItem.volunteerAccountID === props.id) ? <input type='button' value='Clear Complete' onClick={deletePU} /> : <></>}
                 <Link to='/volunteer'><input type='button' value='Go Back' /></Link>
             </div>
         </div>
@@ -91,4 +94,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, {updatePickup})(VCard);
+export default connect(mapStateToProps, {updatePickup, deletePickup})(VCard);

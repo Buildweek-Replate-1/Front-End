@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Link, useParams, useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {connect} from 'react-redux';
-import {updatePickup} from '../../actions/allActions';
+import {updatePickup, deletePickup} from '../../actions/allActions';
 
 const BCard = props => {
     const {id} = useParams();
@@ -34,9 +34,12 @@ const BCard = props => {
 
     const deleteOrder = evt => {
         evt.preventDefault();
+        
+        props.deletePickup(foodItem);
+        props.history.push('/business');
     };
     
-    console.log('FOODITEM', foodItem);
+    console.log('Inside BCard: FOODITEM', foodItem);
     return (
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <div>Food ID: {foodItem.id}</div>
@@ -66,4 +69,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, {updatePickup})(BCard);
+export default connect(mapStateToProps, {updatePickup, deletePickup})(BCard);

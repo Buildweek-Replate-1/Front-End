@@ -27,8 +27,8 @@ function App() {
         </Route>
         <Route path='/register' component={Registration} />
         {/* <Route path='/business' component={Business} /> */}
-        <Route path='/volunteer' component={VDashboard} />
-        <Route path='/business' component={BusForm} />
+        <Route exact path='/volunteer' component={VDashboard} />
+        <Route exact path='/business' component={BusForm} />
         <Route path='/RegisterBusiness' component={RegisterBusiness} />
         <Route path='/RegisterVolunteer' component={RegisterVolunteer} />
         <Route path ='/business/pickups/:id' component={BCard} />
